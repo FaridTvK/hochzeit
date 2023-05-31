@@ -1,16 +1,16 @@
 import express from "express";
-import cors from "cors"
-
 import { todos, addTodo, deleteTodo, updateTodo } from "./model/TodoModel.js"
 
-
 const app = express()
-
 // es wird als default Port eingesetz, falls der Port nicht funktioniert hat.
 const PORT = process.env.Port || 3001;
 
 app.use(express.json())
-app.use(cors())
+// app.use(cors())
+
+app.use((express.static("../front-end/build")))
+
+app.listen(PORT, () => console.log(`Server is am laufen mit diesem Port ${PORT}`))
 
 app.get("/todos", (req, res) => {
     res.send(todos)
@@ -35,5 +35,4 @@ app.delete("/todos/:id", (req, res) => {
     res.send("it has deleted")
 })
 
-app.listen(PORT, () => console.log(`Server is am laufen mit diesem Port ${PORT}`))
 
