@@ -1,4 +1,5 @@
 import fs from "node:fs/promises"
+import { v4 as uuidv4 } from "uuid";
 
 const File_Path = "./data/todos.json"
 
@@ -16,13 +17,13 @@ const _saveTodo = async () => {
     await fs.writeFile(File_Path, JSON.stringify(todos))
 } 
 
-const _getTodobyId = () => {
-    const lastId = todos[todos.length - 1]?.id
-    if(lastId){
-        return lastId + 1
-    }
-    return 1;
-}
+// const _getTodobyId = () => {
+//     const lastId = todos[todos.length - 1]?.id
+//     if(lastId){
+//         return lastId + 1
+//     }
+//     return 1;
+// }
 
 
 
@@ -34,7 +35,7 @@ const _findEntry = (id) => {
 
 
 export const addTodo = async (todo) => {
-    const newTodo = {...todo, id: _getTodobyId()}
+    const newTodo = {...todo, id: uuidv4()}
     todos.push(newTodo)
     await _saveTodo()
     return newTodo
